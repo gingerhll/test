@@ -1,0 +1,12 @@
+---
+id: bf98746b-c052-45f6-8ce8-7342e126497d
+---
+%%{init: {"fontFamily": "Menlo"}}%%
+flowchart TD
+    RECEIVE["Bob receives<br/>IV and Ciphertext C"] --> DECRYPT["AES-256-CTR Decryption"]
+    KEY["Shared secret key K<sub>A</sub>"] --> DECRYPT
+    DECRYPT --> DATA["Recover plaintext fields<br/>MsgNo | ID<sub>A</sub> | M | ID<sub>B</sub> | Z"]
+    DATA --> CALCULATE["<div style='width:300px'>Recalculate<br/>Z' = M ⊕ ID<sub>A</sub> ⊕ ID<sub>B</sub>"]
+    CALCULATE --> COMPARE{"Is Z' equal to Z?"}
+    COMPARE -->|"Yes"| ACCEPT["Accept the transaction"]
+    COMPARE -->|"No"| REJECT["Reject the transaction"]
